@@ -33,7 +33,7 @@ html = """
 def get_html():
     return HTMLResponse(html)
 
-@app.websocket("/web-socket")
+@app.websocket("/ws")
 async def webSocket_create(webscoket:WebSocket):
     await webscoket.accept()
     while True:
