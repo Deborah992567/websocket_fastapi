@@ -34,12 +34,13 @@ def get_html():
     return HTMLResponse(html)
 
 @app.websocket("/ws")
-async def webSocket_create(webscoket:WebSocket):
-    await manager.accept()
+async def webSocket_create(webscoket:WebSocket , username:str):
+    await manager.accept(username , webscoket)
     try:
         while True:
             data = await webscoket.receive()
-            await manager.broadcast(f"users says {data}")
+            receipent , message = (":" , 1)
+            await manager.personal_info(f"{username} says:{message}" , receipent)
     except:
         manager.disconnect(webscoket)
         
