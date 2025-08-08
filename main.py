@@ -35,8 +35,11 @@ def get_html():
 
 @app.websocket("/ws")
 async def webSocket_create(webscoket:WebSocket):
-    await webscoket.accept()
-    while True:
-        data = await webscoket.receive()
-        await webscoket.send_text(f"server says {data}")
-    
+    await manager.accept()
+    try:
+        while True:
+            data = await webscoket.receive()
+            await manager.broadcast(f"users says {data}")
+    except:
+        manager.disconnect(webscoket)
+        
